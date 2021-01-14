@@ -9,7 +9,7 @@ function Diary {
         if (!(Test-Path $Path)) {
             New-Item $Path | Out-Null
         }
-        DiaryEditor $Path
+        Invoke-Expression "$DiaryEditor $Path"
     }
 
     function Add-Diary {
@@ -36,9 +36,11 @@ function Diary {
     }
     elseif ($args[0] -eq "tomorrow" -or $args[0] -eq "to") {
         $DateTime = $([DateTime]::Today.AddDays(+1))
-    } elseif ($args[0] -eq "yesterday" -or $args[0] -eq "y") {
+    }
+    elseif ($args[0] -eq "yesterday" -or $args[0] -eq "y") {
         $DateTime = $([DateTime]::Today.AddDays(-1))
-    } else {
+    }
+    else {
         $Message = @'
 Unsupported flag, use:
     Diary [t or today] for adding diary for today
